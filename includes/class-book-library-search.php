@@ -78,7 +78,6 @@ class Book_Library_Search {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -122,6 +121,24 @@ class Book_Library_Search {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-book-library-search-public.php';
 
+		/**
+		 * The class responsible for defining all actions that occur in the book-library-search-shortcode
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-book-library-search-shortcode.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the register-book
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-book-library-search-register-book.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the register-book
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-book-library-search-meta-box.php';
+
 		$this->loader = new Book_Library_Search_Loader();
 
 	}
@@ -153,10 +170,12 @@ class Book_Library_Search {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Book_Library_Search_Admin( $this->get_plugin_name(), $this->get_version() );
-
+		$plugin_book_register =  new Book_Library_Search_Register_Book( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'init', $plugin_book_register,'book_custom_post_type', 0 );
+		$this->loader->add_action( 'init',$plugin_book_register, 'author_taxonomy', 0 );
+		$this->loader->add_action( 'init',$plugin_book_register, 'publisher_taxonomy', 0 );
 	}
 
 	/**
@@ -169,12 +188,17 @@ class Book_Library_Search {
 	private function define_public_hooks() {
 
 		$plugin_public = new Book_Library_Search_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_shortcode = new Book_Library_Search_Shortcode( $this->get_plugin_name(), $this->get_version() );
+		$plugin_meta_box = new Book_Library_Search_Meta_Box( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_shortcode( 'books_search', $plugin_shortcode,'books_custom_shortcode',0);
+		$this->loader->add_action('wp_ajax_myfilter', $plugin_public, 'misha_filter_function'); // wp_ajax_{ACTION HERE} 
+		$this->loader->add_action('wp_ajax_nopriv_myfilter', $plugin_public,'misha_filter_function');
+		
 
 	}
-
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *

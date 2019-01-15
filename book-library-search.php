@@ -77,6 +77,8 @@ function run_book_library_search() {
 
 	$plugin = new Book_Library_Search();
 	$plugin->run();
-
+	//print_r($plugin);
 }
 run_book_library_search();
+
+

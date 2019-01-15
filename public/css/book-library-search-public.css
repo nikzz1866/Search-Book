@@ -2,3 +2,30 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ /*#filter input.book-name {
+    float: left;
+    width: 50%;
+}
+#filter input.author {
+    width: 50%;
+}*/
+
+.page-id-15 #filter .search-form .search-submit{
+	position: relative; 
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

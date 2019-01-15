@@ -50,6 +50,8 @@ class Book_Library_Search_Loader {
 
 		$this->actions = array();
 		$this->filters = array();
+		$this->shortcode = array();
+		$this->meta = array();
 
 	}
 
@@ -79,6 +81,10 @@ class Book_Library_Search_Loader {
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
+	}
+
+	public function add_shortcode( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
+		$this->shortcode = $this->add( $this->shortcode, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
 	/**
@@ -122,6 +128,10 @@ class Book_Library_Search_Loader {
 
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		}
+
+		foreach ( $this->shortcode as $hook ) {
+			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
 
 	}
