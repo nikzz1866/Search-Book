@@ -90,10 +90,13 @@ class Book_Library_Search_Shortcode {
   				<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
   				<div id="slider-range"></div>
 				<input type="submit" id="btn-search" class="btn-submit" value="Search">
+
 			</form>';
-			$html .='<div id="response">
-			
-			</div>';
+			$html .='<div id="ajx_respo">
+				<img id="loader" src="'.plugin_dir_url( __FILE__ ).'img/loader.gif" style="display:none;width: 19%;margin: 0 auto">
+			<div id="response">
+					
+			</div></div>';
 			return $html;
 	}
 

@@ -112,39 +112,40 @@ class Book_Library_Search_Public {
 
 	function misha_filter_function(){
 	
-	$meta_query = array();
-    if(($_POST['min_price'] != 0 ) && ($_POST['max_price'] != 0) )  {
-        //$year = sanitize_text_field( $_POST['year'] );
-        $meta_query[] = array(
-			'key' => 'price',
-			'value' => array($_POST['min_price'],$_POST['max_price']),
-			'type' => 'numeric',
-			'compare' => 'BETWEEN'
-		);
-    } else if(($_POST['rating'] != "") && ($_POST['min_price'] == 0) && ($_POST['max_price'] == 0)) {
-        //$rating = sanitize_text_field(  );
-        $meta_query[] = array(
-            'key' => 'rating',
-            'value' => $_POST['rating'],
-            'compare' => '='
-        );
-    }else if(($_POST['min_price'] != '') && ($_POST['max_price'] != 0) && ($_POST['rating'] != 0)){
-    	
-    	$meta_query = array('relation' => 'AND', );
+		$meta_query = array();
 
-    	$meta_query[] = array(
-            'key' => 'price',
-			'value' => array($_POST['min_price'],$_POST['max_price']),
-			'type' => 'numeric',
-			'compare' => 'BETWEEN'
-        );
-    	$meta_query[] = array(
-            'key' => 'rating',
-            'value' => $_POST['rating'],
-            'compare' => '='
-        );
-    	
-    }
+	    if(($_POST['min_price'] != 0 ) && ($_POST['max_price'] != 0) )  {
+	        //$year = sanitize_text_field( $_POST['year'] );
+	        $meta_query[] = array(
+				'key' => 'price',
+				'value' => array($_POST['min_price'],$_POST['max_price']),
+				'type' => 'numeric',
+				'compare' => 'BETWEEN'
+			);
+	    } else if(($_POST['rating'] != "") && ($_POST['min_price'] == 0) && ($_POST['max_price'] == 0)) {
+	        //$rating = sanitize_text_field(  );
+	        $meta_query[] = array(
+	            'key' => 'rating',
+	            'value' => $_POST['rating'],
+	            'compare' => '='
+	        );
+	    }else if(($_POST['min_price'] != '') && ($_POST['max_price'] != 0) && ($_POST['rating'] != 0)){
+	    	
+	    	$meta_query = array('relation' => 'AND', );
+
+	    	$meta_query[] = array(
+	            'key' => 'price',
+				'value' => array($_POST['min_price'],$_POST['max_price']),
+				'type' => 'numeric',
+				'compare' => 'BETWEEN'
+	        );
+	    	$meta_query[] = array(
+	            'key' => 'rating',
+	            'value' => $_POST['rating'],
+	            'compare' => '='
+	        );
+	    	
+	    }
  
 
 		$tax_query = array();
@@ -226,9 +227,8 @@ class Book_Library_Search_Public {
 	    );	
 		}
 	
-
 		$search_query = new WP_Query( $args );
-	     //print_r($search_query);
+	   // print_r($search_query);
 		// for taxonomies / categories
 		if ( $search_query->have_posts() ) {
  

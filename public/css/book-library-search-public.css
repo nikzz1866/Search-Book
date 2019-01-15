@@ -9,7 +9,31 @@
 #filter input.author {
     width: 50%;
 }*/
-
+img#loader {
+    width: 19%;
+    margin: 0 auto;
+}
+select.publisher, select.rating {
+    width: 56rem;
+}
+div#slider-range {
+    margin-bottom: 20px;
+    width: 99%;
+    margin-left: 10px;
+}
+.ui-widget.ui-widget-content {
+    border: 1px solid #003eff !important;
+}
+.ui-widget-header{
+  background: #8da4f7 !important;
+}
+input#btn-search {
+    margin: 22px 0;
+}
+.wrap-input100 {
+    margin: 0 auto;
+    padding: 5px 5px;
+}
 .page-id-15 #filter .search-form .search-submit{
 	position: relative; 
 }

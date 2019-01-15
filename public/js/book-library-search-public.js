@@ -86,7 +86,8 @@ jQuery(function($){
 			 }, // form data
 			type:filter.attr('method'), // POST
 			beforeSend:function(xhr){
-				filter.find('button').text('Processing...'); // changing the button label
+				$("#ajx_respo").find('img').show(); // changing the button label
+				$("#response").css({ opacity: 0.5 });
 			},
 			success : function(response) {
             var mafs = $("#response").empty();
@@ -113,6 +114,8 @@ jQuery(function($){
                 }
                 html  += "</table>"
                 $("#response").append(html);
+                $('#loader').show();
+                
             } else {
             	var html  = "<table>";
               		 	html  += "<tr>";
@@ -126,8 +129,13 @@ jQuery(function($){
                 html += "<tr class='no-result'><td>No matching Book found. Try a different filter or search keyword</td></tr>";
                 html  += "</table>";
                 $("#response").append(html);
+
             }
-        }
+        },
+        complete: function (response) {
+	      $('#loader').hide();
+			$("#response").css({ opacity: 1 });
+	     }
 		});
 		return false;
 	});
