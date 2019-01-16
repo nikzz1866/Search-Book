@@ -111,7 +111,14 @@ class Book_Library_Search_Public {
 	}	
 
 	function misha_filter_function(){
-	
+
+	/**
+	==================================================================================
+								Meta query Start
+
+		***  We have 2 meta fileds that is price and rating 
+	==================================================================================
+	*/	
 		$meta_query = array();
 
 	    if(($_POST['min_price'] != 0 ) && ($_POST['max_price'] != 0) )  {
@@ -129,7 +136,7 @@ class Book_Library_Search_Public {
 	            'value' => $_POST['rating'],
 	            'compare' => '='
 	        );
-	    }else if(($_POST['min_price'] != '') && ($_POST['max_price'] != 0) && ($_POST['rating'] != 0)){
+	    }else if(($_POST['min_price'] != 0) && ($_POST['max_price'] != 0) && ($_POST['rating'] != 0)){
 	    	
 	    	$meta_query = array('relation' => 'AND', );
 
@@ -146,7 +153,18 @@ class Book_Library_Search_Public {
 	        );
 	    	
 	    }
- 
+	    /**
+		==================================================================================
+									Meta query end
+										
+			***  We have 2 meta fileds that is price and rating 
+		==================================================================================
+		*/
+ 	
+ 	/* --------------------- Tax Query -----------------------------------------------------
+	** Tax query filter data based on tax value 
+	** we have 2 taxonomy author and publisher so it filtered as per request data
+ 	*/
 
 		$tax_query = array();
 	    if(($_POST['publisher'] != "") && ($_POST['author'] == "")) {
@@ -177,6 +195,12 @@ class Book_Library_Search_Public {
 			),
 		);
 	    }
+
+ 	/* ---------------------End Tax Query -----------------------------------------------------
+	** */
+
+
+
 		if( ($_POST['bookname'] != "") && ($_POST['publisher'] == "")  && ($_POST['author'] == "")   ) {
 			$args = array(
 	        'post_type' => 'book',
@@ -194,6 +218,14 @@ class Book_Library_Search_Public {
 	        //'s' => $_POST['bookname']  
 	    );
 		}else if ( ($_POST['publisher'] != "") && ($_POST['bookname'] != "") ) {
+			$args = array(
+	        'post_type' => 'book',
+	        'posts_per_page' => -1,
+	        //'meta_query' => $meta_query,
+	        'tax_query' => $tax_query,
+	        's' => $_POST['bookname']  
+	    );
+		}else if ( ($_POST['publisher'] == "") && ($_POST['bookname'] != "") && ($_POST['author'] != "") ) {
 			$args = array(
 	        'post_type' => 'book',
 	        'posts_per_page' => -1,
@@ -224,6 +256,14 @@ class Book_Library_Search_Public {
 	        'meta_query' => $meta_query,
 	        //'tax_query' => $tax_query,
 	        //'s' => $_POST['bookname']  
+	    );	
+		}else if(($_POST['min_price'] != '') && ($_POST['max_price'] != '') && ($_POST['rating'] != "") && ($_POST['publisher'] != "") && ($_POST['bookname'] != "") ){
+			$args = array(
+	        'post_type' => 'book',
+	        'posts_per_page' => 6,
+	        'meta_query' => $meta_query,
+	        'tax_query' => $tax_query,
+	        's' => $_POST['bookname']  
 	    );	
 		}
 	
